@@ -1,0 +1,3 @@
+RememberNavController: Composeda recomposition diye bir konu var. Herhangi gösterdiğimiz composablelardan
+birinde bir değişiklik olursa bütün ekranı tekrar çizmek yerine sadece değişiklik olan kısmı tekrar çizmek için kullanılır.
+Shared preferences a kaydedip geri çekmiş gibi düşünebiliriz.

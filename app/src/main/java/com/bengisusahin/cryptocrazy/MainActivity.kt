@@ -9,39 +9,54 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.bengisusahin.cryptocrazy.ui.theme.CryptoCrazyTheme
+import com.bengisusahin.cryptocrazy.view.CryptoDetailScreen
+import com.bengisusahin.cryptocrazy.view.CryptoListScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             CryptoCrazyTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = "crypto_list_screen" ){
+                    composable("crypto_list_screen"){
+                        // CryptoListScreen
+                        CryptoListScreen(navController = navController)
+                    }
+
+                    composable("crypto_detail_screen/{cryptoId}/{cryptoPrice}", arguments = listOf(
+                        navArgument("cryptoId"){
+                            type = NavType.StringType
+                        },
+                        navArgument("cryptoPrice"){
+                            type = NavType.StringType
+                        },
+                    )){
+                        val cryptoId = remember {
+                            it.arguments?.getString("cryptoId")
+                        }
+
+                        val cryptoPrice = remember {
+                            it.arguments?.getString("cryptoPrice")
+                        }
+                        // CryptoDetailScreen
+                        CryptoDetailScreen(
+                            id = cryptoId ?: "",
+                            price = cryptoPrice ?: "",
+                            navController = navController)
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CryptoCrazyTheme {
-        Greeting("Android")
     }
 }
