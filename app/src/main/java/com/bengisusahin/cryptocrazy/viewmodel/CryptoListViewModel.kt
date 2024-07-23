@@ -72,7 +72,7 @@ class CryptoListViewModel @Inject constructor(
                 // ignore case to make search case insensitive
                 it.currency.contains(query.trim(), ignoreCase = true)
             }
-            
+
             if (isSearchStarting) {
                 initialCryptoList = cryptoList.value
                 isSearchStarting = false
