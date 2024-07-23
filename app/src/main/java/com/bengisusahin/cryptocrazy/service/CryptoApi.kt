@@ -1,15 +1,17 @@
 package com.bengisusahin.cryptocrazy.service
 
+import com.bengisusahin.cryptocrazy.model.Crypto
+import com.bengisusahin.cryptocrazy.model.CryptoList
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface CryptoApi {
 
     @GET("atilsamancioglu/IA32-CryptoComposeData/main/cryptolist.json")
-    suspend fun getCryptoList():Unit
+    suspend fun getCryptoList(): CryptoList
 
     @GET("atilsamancioglu/IA32-CryptoComposeData/main/crypto.json")
-    suspend fun getCryptoDetail(): Unit
+    suspend fun getCryptoDetail(): Crypto
 
 /*
     // nomics kapanmasaydı
