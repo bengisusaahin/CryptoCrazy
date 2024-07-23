@@ -3,7 +3,7 @@ package com.bengisusahin.cryptocrazy.util
 object Constants {
     // https://api.nomics.com/v1/prices?key=%3CKendi%20API%C2%A0Anahtar%C4%B1n%C4%B1z%3E
 
-    const val BASE_URL = "https://raw.githubusercontent.com"
+    const val BASE_URL = "https://raw.githubusercontent.com/"
     const val API_KEY = ""
     const val CALL_ATTRIBUTES = "id,name,logo_url"
 
