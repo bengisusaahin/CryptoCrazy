@@ -1,0 +1,48 @@
+package com.bengisusahin.cryptocrazy.viewmodel
+
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.bengisusahin.cryptocrazy.model.CryptoListItem
+import com.bengisusahin.cryptocrazy.repository.CryptoRepository
+import com.bengisusahin.cryptocrazy.util.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class CryptoListViewModel @Inject constructor(
+    private val repository: CryptoRepository
+) : ViewModel() {
+
+    var cryptoList = mutableStateOf<List<CryptoListItem>>(listOf())
+    var error = mutableStateOf("")
+    var isLoading = mutableStateOf(false)
+
+    fun loadCryptoList() {
+        viewModelScope.launch {
+            isLoading.value = true
+            val result = repository.getCryptoList()
+                when (result) {
+                    is Resource.Success -> {
+                        val cryptoListItem = result.data!!.mapIndexed{ index, crypto ->
+                            CryptoListItem(
+                                currency = crypto.currency,
+                                price = crypto.price
+                            )
+                        }
+                        error.value = ""
+                        isLoading.value = false
+                        cryptoList.value += cryptoListItem
+                    }
+                    is Resource.Error -> {
+                        cryptoList.value = listOf()
+                        error.value = result.message!!
+                        isLoading.value = false
+                    }
+                    is Resource.Loading -> TODO()
+                }
+        }
+    }
+
+}

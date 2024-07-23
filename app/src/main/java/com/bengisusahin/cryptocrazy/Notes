@@ -1,3 +1,7 @@
 RememberNavController: Composeda recomposition diye bir konu var. Herhangi gösterdiğimiz composablelardan
 birinde bir değişiklik olursa bütün ekranı tekrar çizmek yerine sadece değişiklik olan kısmı tekrar çizmek için kullanılır.
 Shared preferences a kaydedip geri çekmiş gibi düşünebiliriz.
+
+Composeda live data/ flow ya gerek kalmıyo çünkü bizim zaten mutable state lerimiz var ve onlar değiştiğinde tekrar çizilir.
+
+funkction u suspend yapabilirsin ya da function içinde viewmodelScope.launch yapabilirsin. Composeda ikisinin ayrı getirileri var.
