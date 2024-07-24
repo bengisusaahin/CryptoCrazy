@@ -32,7 +32,6 @@ import com.bengisusahin.cryptocrazy.util.Resource
 import com.bengisusahin.cryptocrazy.viewmodel.CryptoDetailViewModel
 import kotlinx.coroutines.launch
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun CryptoDetailScreen(
     id:String,
@@ -41,18 +40,42 @@ fun CryptoDetailScreen(
     viewModel: CryptoDetailViewModel = viewModel()
 ) {
 
+    /*
     // Step 1 -> Wrong
     val scope = rememberCoroutineScope()
 
+    var cryptoItem : Resource<Crypto> = Resource.Loading()
+    /*
     var cryptoItem by remember {
         mutableStateOf<Resource<Crypto>>(Resource.Loading())
     }
+     */
 
+    // compositionun baştan devamlı çalışmasını sağlar
     scope.launch {
         cryptoItem = viewModel.getCryptoDetail()
         println(cryptoItem.data)
     }
 
+     */
+
+
+    /*
+    // Step 2 -> Better
+    var cryptoItem by remember {
+        mutableStateOf<Resource<Crypto>>(Resource.Loading())
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        cryptoItem = viewModel.getCryptoDetail()
+        println(cryptoItem.data)
+    }
+     */
+
+    // Step 3 -> Best
+    val cryptoItem by produceState<Resource<Crypto>>(initialValue = Resource.Loading()) {
+        value = viewModel.getCryptoDetail()
+    }
 
     Box(
         modifier = Modifier
