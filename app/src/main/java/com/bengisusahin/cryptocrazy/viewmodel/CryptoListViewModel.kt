@@ -77,6 +77,7 @@ class CryptoListViewModel @Inject constructor(
                 initialCryptoList = cryptoList.value
                 isSearchStarting = false
             }
+            cryptoList.value = results
         }
     }
 

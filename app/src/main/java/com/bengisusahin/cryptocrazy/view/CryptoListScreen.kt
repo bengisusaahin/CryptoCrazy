@@ -69,7 +69,7 @@ fun CryptoListScreen(
             ) {
                 viewModel.searchCryptoList(it)
             }
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             // Crypto List
             CryptoList(navController = navController)
         }
@@ -93,7 +93,9 @@ fun SearchBar(
     }
 
     Box(modifier = modifier){
-        BasicTextField(value = text , onValueChange = {
+        BasicTextField(
+            value = text ,
+            onValueChange = {
             text = it
             onSearch(it)
         }, maxLines = 1,
@@ -106,12 +108,14 @@ fun SearchBar(
                 .padding(horizontal = 20.dp, vertical = 12.dp)
                 .onFocusChanged {
                     isHintDisplayed = !it.isFocused && text.isEmpty()
-                })
+                }
+        )
         if(isHintDisplayed){
             Text(
                 text = hint,
                 color = Color.LightGray,
-                modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp)
+                modifier = Modifier
+                    .padding(horizontal = 20.dp, vertical = 12.dp)
             )
         }
     }
@@ -128,7 +132,10 @@ fun CryptoList(
 
     CryptoListView(cryptos = cryptos, navController = navController)
 
-    Box (contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()){
+    Box (
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ){
         if(isLoading){
             CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
         }
@@ -159,6 +166,7 @@ fun CryptoRow(
     navController: NavController,
     cryptoListItem: CryptoListItem
 ){
+    Box(){}
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -190,7 +198,7 @@ fun RetryView(
     error: String,
     onRetry: () -> Unit
 ){
-    Column() {
+    Column {
         Text(
             text = error,
             color = Color.Red,
@@ -198,7 +206,7 @@ fun RetryView(
         )
         Spacer(modifier = Modifier.height(10.dp))
         Button(onClick = {
-            onRetry
+            onRetry()
         }, modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text(text = "Retry")
         }
